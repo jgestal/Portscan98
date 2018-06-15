@@ -46,7 +46,7 @@ class PortscanViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
+        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateUI), userInfo: nil, repeats: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -148,7 +148,7 @@ class PortscanViewController: UIViewController {
     // MARK: - UI Update
     //*****************************
 
-    func updateUI() {
+    @objc func updateUI() {
         
         if state == .running {
             startButton.setTitle("PAUSE", for: .normal)
@@ -160,17 +160,21 @@ class PortscanViewController: UIViewController {
             startButton.setTitle("START", for: .normal)
         }
         
-        let textFieldsEnabled = state == .stop
-        
-        startSocketTextField.isEnabled = textFieldsEnabled
-        endSocketTextField.isEnabled = textFieldsEnabled
-        hostTextField.isEnabled = textFieldsEnabled
-        
-        timeLabel.text = "Time: " + elapsedTime()
-
-        let total = endAt - startAt + 1
-        let progress = CGFloat(index - openSocketCounter) / CGFloat(total)
-        progressViewController.updateProgress(progress)
+        if state == .stop {
+            startSocketTextField.isEnabled = true
+            endSocketTextField.isEnabled = true
+            hostTextField.isEnabled = true
+            
+        } else {
+            startSocketTextField.isEnabled = false
+            endSocketTextField.isEnabled = false
+            hostTextField.isEnabled = false
+            
+            timeLabel.text = "Time: " + elapsedTime()
+            let total = endAt - startAt + 1
+            let progress = CGFloat(index - openSocketCounter) / CGFloat(total)
+            progressViewController.updateProgress(progress)
+        }
     }
     
     func elapsedTime () -> String {
@@ -184,7 +188,6 @@ class PortscanViewController: UIViewController {
             return ""
         }
     }
-    
 
     //*****************************
     // MARK: - Main Functions
@@ -273,7 +276,7 @@ class PortscanViewController: UIViewController {
             print("*** Open Next: \(next)")
             openSocketCounter += 1
             statusLabel.text = "Looking: \(next)"
-            openSocket(host: target, port: UInt16(next), timeout: 0.5)
+            openSocket(host: target, port: UInt16(next), timeout: TIMEOUT)
             index += 1
             openNext()
         }
