@@ -87,16 +87,16 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 <connections>
                                                     <action selector="textFieldEditingDidEnd:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="cJP-C8-xh4"/>
                                                 </connections>
                                             </textField>
-                                            <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="65000" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G85-ME-nvk" customClass="W98TextField" customModule="Portscan" customModuleProvider="target">
+                                            <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="65535" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G85-ME-nvk" customClass="W98TextField" customModule="Portscan" customModuleProvider="target">
                                                 <rect key="frame" x="294" y="62" width="72" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 <connections>
                                                     <action selector="textFieldEditingDidEnd:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="Eda-4l-CYm"/>
                                                 </connections>
@@ -108,7 +108,7 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="URL"/>
                                                 <connections>
                                                     <action selector="textFieldEditingChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="k6h-0c-hsz"/>
                                                     <action selector="textFieldEditingDidEnd:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="lmK-7e-Xra"/>
