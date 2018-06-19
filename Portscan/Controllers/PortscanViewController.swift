@@ -32,7 +32,7 @@ class PortscanViewController: UIViewController {
     
     
     var progressViewController: W98ProgressViewController!
-
+    
     var state : ScanState = .stop
     var index = 0
     var openSocketCounter = 0
@@ -54,7 +54,7 @@ class PortscanViewController: UIViewController {
             progressViewController = segue.destination as! W98ProgressViewController
         }
     }
-
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -79,7 +79,7 @@ class PortscanViewController: UIViewController {
             sender.text = adjustTextFieldSocketNumber(text: sender.text!, defaultNumber: MIN_SOCKET_NUMBER)
         }
             
-        // End Socket
+            // End Socket
         else if sender.tag == 2 {
             sender.text = adjustTextFieldSocketNumber(text: sender.text!, defaultNumber: MAX_SOCKET_NUMBER)
         }
@@ -89,7 +89,7 @@ class PortscanViewController: UIViewController {
         
         let start = Int(startSocketTextField.text!) ?? MIN_SOCKET_NUMBER
         let end = Int(endSocketTextField.text!) ?? MAX_SOCKET_NUMBER
-    
+        
         if start <= end {
             startSocketTextField.textColor = .black
             endSocketTextField.textColor = .black
@@ -122,15 +122,28 @@ class PortscanViewController: UIViewController {
     }
     
     @IBAction func startButtonPressed(_ sender: UIButton) {
-        if validateSockets() && validateHost() {
-            target = hostTextField.text!
-            if state == .running {
-                pauseScan()
-            } else if state == .pause {
-                continueScan()
-            } else if state == .stop {
-                startScan()
-            }
+        
+        guard validateSockets() else {
+            let alert = UIAlertController.init(title: "Error", message: "You must provide a valid range of sockets (\(MIN_SOCKET_NUMBER) - \(MAX_SOCKET_NUMBER)).", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        guard validateHost() else {
+            let alert = UIAlertController.init(title: "Error", message: "You must provide a valid host or IP to scan.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        target = hostTextField.text!
+        if state == .running {
+            pauseScan()
+        } else if state == .pause {
+            continueScan()
+        } else if state == .stop {
+            startScan()
         }
     }
     
@@ -147,7 +160,7 @@ class PortscanViewController: UIViewController {
     //*****************************
     // MARK: - UI Update
     //*****************************
-
+    
     @objc func updateUI() {
         
         if state == .running {
@@ -188,7 +201,7 @@ class PortscanViewController: UIViewController {
             return ""
         }
     }
-
+    
     //*****************************
     // MARK: - Main Functions
     //*****************************
@@ -266,7 +279,7 @@ class PortscanViewController: UIViewController {
         }
         updateUI()
     }
-
+    
     
     func openNext() {
         
@@ -344,5 +357,6 @@ extension PortscanViewController: GCDAsyncSocketDelegate {
         }
     }
 }
+
 
 
